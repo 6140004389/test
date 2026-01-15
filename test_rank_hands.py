@@ -1,20 +1,13 @@
-import pytest
-
 from card import Card, Rank, Suit
 from rank_hands import HandRanks, evaluate_hand, get_best_hand
 
-
-def c(rank: Rank, suit: Suit):
-    return Card(rank=rank, suit=suit)
-
-
 def test_royal_flush():
     hand = [
-        c(Rank.TEN, Suit.HEARTS),
-        c(Rank.JACK, Suit.HEARTS),
-        c(Rank.QUEEN, Suit.HEARTS),
-        c(Rank.KING, Suit.HEARTS),
-        c(Rank.ACE, Suit.HEARTS),
+        Card(Rank.TEN, Suit.HEARTS),
+        Card(Rank.JACK, Suit.HEARTS),
+        Card(Rank.QUEEN, Suit.HEARTS),
+        Card(Rank.KING, Suit.HEARTS),
+        Card(Rank.ACE, Suit.HEARTS),
     ]
 
     assert evaluate_hand(hand) == HandRanks.ROYAL_FLUSH
@@ -22,11 +15,11 @@ def test_royal_flush():
 
 def test_straight_flush():
     hand = [
-        c(Rank.NINE, Suit.SPADES),
-        c(Rank.EIGHT, Suit.SPADES),
-        c(Rank.SEVEN, Suit.SPADES),
-        c(Rank.SIX, Suit.SPADES),
-        c(Rank.FIVE, Suit.SPADES),
+        Card(Rank.NINE, Suit.SPADES),
+        Card(Rank.EIGHT, Suit.SPADES),
+        Card(Rank.SEVEN, Suit.SPADES),
+        Card(Rank.SIX, Suit.SPADES),
+        Card(Rank.FIVE, Suit.SPADES),
     ]
 
     assert evaluate_hand(hand) == HandRanks.STRAIGHT_FLUSH
@@ -34,11 +27,11 @@ def test_straight_flush():
 
 def test_four_of_a_kind():
     hand = [
-        c(Rank.ACE, Suit.SPADES),
-        c(Rank.ACE, Suit.HEARTS),
-        c(Rank.ACE, Suit.DIAMONDS),
-        c(Rank.ACE, Suit.CLUBS),
-        c(Rank.KING, Suit.SPADES),
+        Card(Rank.ACE, Suit.SPADES),
+        Card(Rank.ACE, Suit.HEARTS),
+        Card(Rank.ACE, Suit.DIAMONDS),
+        Card(Rank.ACE, Suit.CLUBS),
+        Card(Rank.KING, Suit.SPADES),
     ]
 
     assert evaluate_hand(hand) == HandRanks.FOUR_OF_A_KIND
@@ -46,11 +39,11 @@ def test_four_of_a_kind():
 
 def test_full_house():
     hand = [
-        c(Rank.QUEEN, Suit.SPADES),
-        c(Rank.QUEEN, Suit.HEARTS),
-        c(Rank.QUEEN, Suit.CLUBS),
-        c(Rank.TEN, Suit.SPADES),
-        c(Rank.TEN, Suit.HEARTS),
+        Card(Rank.QUEEN, Suit.SPADES),
+        Card(Rank.QUEEN, Suit.HEARTS),
+        Card(Rank.QUEEN, Suit.CLUBS),
+        Card(Rank.TEN, Suit.SPADES),
+        Card(Rank.TEN, Suit.HEARTS),
     ]
 
     assert evaluate_hand(hand) == HandRanks.FULL_HOUSE
@@ -58,11 +51,11 @@ def test_full_house():
 
 def test_flush():
     hand = [
-        c(Rank.ACE, Suit.CLUBS),
-        c(Rank.JACK, Suit.CLUBS),
-        c(Rank.NINE, Suit.CLUBS),
-        c(Rank.FIVE, Suit.CLUBS),
-        c(Rank.TWO, Suit.CLUBS),
+        Card(Rank.ACE, Suit.CLUBS),
+        Card(Rank.JACK, Suit.CLUBS),
+        Card(Rank.NINE, Suit.CLUBS),
+        Card(Rank.FIVE, Suit.CLUBS),
+        Card(Rank.TWO, Suit.CLUBS),
     ]
 
     assert evaluate_hand(hand) == HandRanks.FLUSH
@@ -70,11 +63,11 @@ def test_flush():
 
 def test_straight_with_low_ace():
     hand = [
-        c(Rank.ACE, Suit.SPADES),
-        c(Rank.TWO, Suit.HEARTS),
-        c(Rank.THREE, Suit.DIAMONDS),
-        c(Rank.FOUR, Suit.CLUBS),
-        c(Rank.FIVE, Suit.SPADES),
+        Card(Rank.ACE, Suit.SPADES),
+        Card(Rank.TWO, Suit.HEARTS),
+        Card(Rank.THREE, Suit.DIAMONDS),
+        Card(Rank.FOUR, Suit.CLUBS),
+        Card(Rank.FIVE, Suit.SPADES),
     ]
 
     assert evaluate_hand(hand) == HandRanks.STRAIGHT
@@ -82,11 +75,11 @@ def test_straight_with_low_ace():
 
 def test_three_of_a_kind():
     hand = [
-        c(Rank.SEVEN, Suit.SPADES),
-        c(Rank.SEVEN, Suit.HEARTS),
-        c(Rank.SEVEN, Suit.DIAMONDS),
-        c(Rank.KING, Suit.CLUBS),
-        c(Rank.TWO, Suit.SPADES),
+        Card(Rank.SEVEN, Suit.SPADES),
+        Card(Rank.SEVEN, Suit.HEARTS),
+        Card(Rank.SEVEN, Suit.DIAMONDS),
+        Card(Rank.KING, Suit.CLUBS),
+        Card(Rank.TWO, Suit.SPADES),
     ]
 
     assert evaluate_hand(hand) == HandRanks.THREE_OF_A_KIND
@@ -94,11 +87,11 @@ def test_three_of_a_kind():
 
 def test_two_pair():
     hand = [
-        c(Rank.JACK, Suit.SPADES),
-        c(Rank.JACK, Suit.HEARTS),
-        c(Rank.FOUR, Suit.DIAMONDS),
-        c(Rank.FOUR, Suit.CLUBS),
-        c(Rank.NINE, Suit.SPADES),
+        Card(Rank.JACK, Suit.SPADES),
+        Card(Rank.JACK, Suit.HEARTS),
+        Card(Rank.FOUR, Suit.DIAMONDS),
+        Card(Rank.FOUR, Suit.CLUBS),
+        Card(Rank.NINE, Suit.SPADES),
     ]
 
     assert evaluate_hand(hand) == HandRanks.TWO_PAIR
@@ -106,11 +99,11 @@ def test_two_pair():
 
 def test_one_pair():
     hand = [
-        c(Rank.KING, Suit.SPADES),
-        c(Rank.KING, Suit.HEARTS),
-        c(Rank.TEN, Suit.DIAMONDS),
-        c(Rank.FIVE, Suit.CLUBS),
-        c(Rank.TWO, Suit.SPADES),
+        Card(Rank.KING, Suit.SPADES),
+        Card(Rank.KING, Suit.HEARTS),
+        Card(Rank.TEN, Suit.DIAMONDS),
+        Card(Rank.FIVE, Suit.CLUBS),
+        Card(Rank.TWO, Suit.SPADES),
     ]
 
     assert evaluate_hand(hand) == HandRanks.ONE_PAIR
@@ -118,24 +111,24 @@ def test_one_pair():
 
 def test_high_card():
     hand = [
-        c(Rank.ACE, Suit.SPADES),
-        c(Rank.JACK, Suit.HEARTS),
-        c(Rank.NINE, Suit.DIAMONDS),
-        c(Rank.FIVE, Suit.CLUBS),
-        c(Rank.THREE, Suit.SPADES),
+        Card(Rank.ACE, Suit.SPADES),
+        Card(Rank.JACK, Suit.HEARTS),
+        Card(Rank.NINE, Suit.DIAMONDS),
+        Card(Rank.FIVE, Suit.CLUBS),
+        Card(Rank.THREE, Suit.SPADES),
     ]
     assert evaluate_hand(hand) == HandRanks.HIGH_CARD
 
 
 def test_get_best_hand_best_of_seven():
     hand = [
-        c(Rank.ACE, Suit.HEARTS),
-        c(Rank.KING, Suit.HEARTS),
-        c(Rank.QUEEN, Suit.HEARTS),
-        c(Rank.JACK, Suit.HEARTS),
-        c(Rank.TEN, Suit.HEARTS),
-        c(Rank.TWO, Suit.CLUBS),
-        c(Rank.THREE, Suit.DIAMONDS),
+        Card(Rank.ACE, Suit.HEARTS),
+        Card(Rank.KING, Suit.HEARTS),
+        Card(Rank.QUEEN, Suit.HEARTS),
+        Card(Rank.JACK, Suit.HEARTS),
+        Card(Rank.TEN, Suit.HEARTS),
+        Card(Rank.TWO, Suit.CLUBS),
+        Card(Rank.THREE, Suit.DIAMONDS),
     ]
 
     assert get_best_hand(hand) == HandRanks.ROYAL_FLUSH
