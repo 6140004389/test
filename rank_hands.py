@@ -1,7 +1,10 @@
-from card import Card
+from collections import Counter
 from enum import Enum
 from itertools import combinations
-from typing import Iterable
+from typing import Sequence
+
+from card import Card
+
 
 class HandRanks(Enum):
     HIGH_CARD = 0
@@ -15,11 +18,12 @@ class HandRanks(Enum):
     STRAIGHT_FLUSH = 8
     ROYAL_FLUSH = 9
 
-def get_rank(hand : list[Card]):
 
-    if (len(hand) != 7):
+def get_best_hand(hand: list[Card]):
+
+    if len(hand) != 7:
         raise ValueError("Expected 7 cards")
-    
+
     best_hand = HandRanks.HIGH_CARD
 
     for combo in combinations(hand, 5):
@@ -29,23 +33,20 @@ def get_rank(hand : list[Card]):
 
     return best_hand
 
-def evaluate_hand(hand : Iterable[Card]):
-    if (len(hand) != 5):
+
+def evaluate_hand(hand: Sequence[Card]):
+    if len(hand) != 5:
         raise ValueError("Expected 5 cards")
-    
+
     ranks = [card.rank.value for card in hand]
     suits = [card.suit for card in hand]
-    rank_counts = {}
 
-    for rank in ranks:
-        rank_counts[rank] = rank_counts.get(rank, 0) + 1
-
+    rank_counts = Counter(ranks)
     counts = sorted(rank_counts.values(), reverse=True)
-    unique_ranks = sorted(rank_counts.keys(), reverse=True)
 
     is_flush = len(set(suits)) == 1
-
     is_straight = False
+
     sorted_ranks = sorted(ranks, reverse=True)
 
     if sorted_ranks == list(range(sorted_ranks[0], sorted_ranks[0] - 5, -1)):
@@ -55,28 +56,30 @@ def evaluate_hand(hand : Iterable[Card]):
         is_straight = True
 
     if is_straight and is_flush:
-        if sorted_ranks == [14, 13, 12, 11, 10]:
-            return HandRanks.ROYAL_FLUSH
-        return HandRanks.STRAIGHT_FLUSH
+        return (
+            HandRanks.ROYAL_FLUSH
+            if sorted_ranks == [14, 13, 12, 11, 10]
+            else HandRanks.STRAIGHT_FLUSH
+        )
 
     if counts == [4, 1]:
         return HandRanks.FOUR_OF_A_KIND
-    
+
     if counts == [3, 2]:
         return HandRanks.FULL_HOUSE
-    
+
     if is_flush:
         return HandRanks.FLUSH
 
     if is_straight:
         return HandRanks.STRAIGHT
-    
+
     if counts == [3, 1, 1]:
         return HandRanks.THREE_OF_A_KIND
 
     if counts == [2, 2, 1]:
         return HandRanks.TWO_PAIR
-    
+
     if counts == [2, 1, 1, 1]:
         return HandRanks.ONE_PAIR
 

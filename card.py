@@ -1,5 +1,6 @@
-from enum import Enum
 from dataclasses import dataclass
+from enum import Enum
+
 
 class Rank(Enum):
     TWO = 2
@@ -16,13 +17,15 @@ class Rank(Enum):
     KING = 13
     ACE = 14
 
+
 class Suit(Enum):
     SPADES = "Spades"
     HEARTS = "Hearts"
     DIAMONDS = "Diamonds"
     CLUBS = "Clubs"
 
+
 @dataclass(frozen=True)
 class Card:
-    suit : Suit
-    rank : Rank
+    rank: Rank
+    suit: Suit
